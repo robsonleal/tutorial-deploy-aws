@@ -28,15 +28,14 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build Maven package
-        run: |
-          cd backend
-          mvn --batch-mode --update-snapshots package
+        run: mvn --batch-mode --update-snapshots package
         working-directory: backend
         env:
           MAVEN_OPTS: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
 
       - name: Execute testes de unidade
         run: |
+          cd backend
           echo "Executando testes de unidade com Maven"
           mvn clean install -e -X
           mvn test
