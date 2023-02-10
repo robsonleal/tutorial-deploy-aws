@@ -2,6 +2,7 @@ package com.devsuperior.dscatalog.resources;
 
 import java.net.URI;
 
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,5 +57,10 @@ public class CategoryResource {
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping(value = "/batatinha")
+	public String retornaBatatinha(){
+		return "Batatinha";
 	}
 } 
