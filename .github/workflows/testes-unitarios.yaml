@@ -1,0 +1,29 @@
+name: Testar aplicação Java
+
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout o código-fonte
+        uses: actions/checkout@v2
+
+      - name: Configure Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Instale as dependências
+        run: |
+          echo "Usando Maven como gerenciador de dependências"
+          mvn install
+
+      - name: Execute testes de unidade
+        run: |
+          echo "Executando testes de unidade com Maven"
+          mvn test
