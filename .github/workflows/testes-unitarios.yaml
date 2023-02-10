@@ -18,10 +18,10 @@ jobs:
         with:
           java-version: 11
 
-      - name: Instale as dependências
+      - name: Rebuild do maven e instalando dependencias
         run: |
-          echo "Usando Maven como gerenciador de dependências"
-          mvn install
+          echo "Fazendo rebuild do maven"
+          mvn clean install -e -X
 
       - name: Execute testes de unidade
         run: |
