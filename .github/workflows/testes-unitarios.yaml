@@ -14,14 +14,23 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Configure Java
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: 11
 
-      - name: Rebuild do maven e instalando dependencias
-        run: |
-          echo "Fazendo rebuild do maven"
-          mvn clean install -e -X
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build Maven package
+        run: mvn --batch-mode --update-snapshots package
+        working-directory: backend
+        env:
+          MAVEN_OPTS: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
 
       - name: Execute testes de unidade
         run: |
